@@ -13,8 +13,16 @@ const Query = {
             address: '118 Splendor Hills'
         }
     },
-    users(parent, args, { db, prisma }, info) {
-        return prisma.query.users(null, info);
+    users(parent, args, { prisma }, info) {
+        const opArgs = {};
+
+        if (args.query) {
+            opArgs.where = {
+                name_contains: args.query
+            }
+        }
+
+        return prisma.query.users(opArgs, info);
 
         // const { query } = args;
         //
@@ -31,26 +39,28 @@ const Query = {
         //     return name.toLowerCase().includes(q);
         // });
     },
-    posts(parent, args, { db }, info) {
-        const { query } = args;
+    posts(parent, args, { prisma }, info) {
+        return prisma.query.posts(null, info);
 
-        if (!query) {
-            return db.posts;
-        }
-
-        // if has query
-        const q = query.toLowerCase();
-
-        return db.posts.filter((post) => {
-            const { title, body } = post;
-            const isTitleMatched = title.toLowerCase().includes(q);
-            const isBodyMatched = body.toLowerCase().includes(q);
-
-            return isTitleMatched || isBodyMatched;
-        });
+        // const { query } = args;
+        //
+        // if (!query) {
+        //     return db.posts;
+        // }
+        //
+        // // if has query
+        // const q = query.toLowerCase();
+        //
+        // return db.posts.filter((post) => {
+        //     const { title, body } = post;
+        //     const isTitleMatched = title.toLowerCase().includes(q);
+        //     const isBodyMatched = body.toLowerCase().includes(q);
+        //
+        //     return isTitleMatched || isBodyMatched;
+        // });
     },
     comments(parent, args, { db }, info) {
-        return db.comments;
+        //return db.comments;
     }
 };
 
