@@ -5,6 +5,8 @@ const prisma = new Prisma({
     endpoint: 'http://localhost:4466'
 });
 
+export { prisma as default };
+
 // prisma.query.users(null, '{ id name }')
 //     .then(data => {
 //     console.log(JSON.stringify(data, undefined, 2));

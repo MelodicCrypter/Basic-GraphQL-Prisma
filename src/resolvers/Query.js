@@ -13,21 +13,23 @@ const Query = {
             address: '118 Splendor Hills'
         }
     },
-    users(parent, args, { db }, info) {
-        const { query } = args;
+    users(parent, args, { db, prisma }, info) {
+        return prisma.query.users(null, info);
 
-        if (!query) {
-            return db.users;
-        }
-
-        // if has query
-        const q = query.toLowerCase();
-
-        return db.users.filter((user) => {
-            const { name } = user;
-
-            return name.toLowerCase().includes(q);
-        });
+        // const { query } = args;
+        //
+        // if (!query) {
+        //     return db.users;
+        // }
+        //
+        // // if has query
+        // const q = query.toLowerCase();
+        //
+        // return db.users.filter((user) => {
+        //     const { name } = user;
+        //
+        //     return name.toLowerCase().includes(q);
+        // });
     },
     posts(parent, args, { db }, info) {
         const { query } = args;
